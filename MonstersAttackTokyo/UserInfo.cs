@@ -10,7 +10,7 @@ namespace MonstersAttackTokyo
     {
         public string UserName { get; set; }
 
-        // Multiple users, rotate turns
+        public string Monster { get; set; }
 
         // Add Vigenere Cipher
     }

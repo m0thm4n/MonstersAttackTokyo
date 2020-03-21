@@ -8,6 +8,8 @@ namespace MonstersAttackTokyo
 {
     public class Tracker
     {
+        public bool heartsUnderSeven = false;
+
         // Keep track of hearts
         public int UserHearts { get; set; }
         // Keep track of stars
@@ -42,23 +44,12 @@ namespace MonstersAttackTokyo
             return UserStars++;
         }
 
-        public bool GameUpdater(List<string> listOfDieFaces, bool heartUnderSeven)
+        public void GameUpdater(List<string> listOfDieFaces)
         {
             foreach (string die in listOfDieFaces)
             {
                 switch (die)
                 {
-                    case "heart":
-                        if (UserHearts <= 7)
-                        {
-                            heartUnderSeven = true;
-                        } else if ((UserHearts >= 12) && !heartUnderSeven)
-                        {
-                            AddUserHearts(UserHearts);
-                            AddUserHearts(UserHearts);
-                        }
-                        break;
-
                     case "claw":
                         // If dice roll equals claw remove heart
                         RemoveUserHearts(UserHearts);
@@ -75,8 +66,6 @@ namespace MonstersAttackTokyo
                         break;
                 }
             }
-
-            return heartUnderSeven;
         }
 
         // Add monster 
