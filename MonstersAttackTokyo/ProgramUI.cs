@@ -46,26 +46,34 @@ namespace MonstersAttackTokyo
 
 
 );
-
             // Have user enter name for game
             Dice dice = new Dice();
             UserInfo userInfo = new UserInfo();
             Tracker tracker = new Tracker();
+            Monster monster = new Monster();
 
             tracker.UserHearts = 12;
             List<string> listOfDieFaces = new List<string>();
+            List<string> listOfMonsters = new List<string>();
 
             // Create a private bool verify hearts aren't <= 10
             bool heartUnderSeven = false;
             bool heartsEqualZero = false;
             bool starsEqualTwenty = false;
+            bool monsterHealthEqualZero = false;
          
 
             Console.WriteLine("Tell me your first name: ");
             userInfo.UserName = Console.ReadLine();
 
+            monster.AddMonsters(listOfMonsters);
+            monster.MonsterName = monster.GetMonsterName(listOfMonsters);
+            tracker.MonsterHealth = monster.AssignMonsterHealth(monster.MonsterName);
+
+            Console.WriteLine($"{userInfo.UserName} attempts to slay {monster.MonsterName}");
+
             // While heart not equal 0 and stars not equal 20
-            while (!heartsEqualZero && !starsEqualTwenty)
+            while (!heartsEqualZero && !starsEqualTwenty && !monsterHealthEqualZero)
             {
                 dice.Die1 = dice.AssignDie(dice.Die1);
                 dice.Die2 = dice.AssignDie(dice.Die2);
@@ -75,8 +83,10 @@ namespace MonstersAttackTokyo
                 dice.Die6 = dice.AssignDie(dice.Die6);
 
                 // Get how many rolls of the dice the user wants to roll
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("How many dice do you want to use for your first roll? ");
                 int diceToBeRolled = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine();
 
                 // Roll the Dice
                 
@@ -84,45 +94,8 @@ namespace MonstersAttackTokyo
                 listOfDieFaces = dice.DiceToBeRolled(diceToBeRolled);
 
                 // Add columns for the different die faces
-                
-                string dieFaceColums = String.Format("{0} {1} {2} {3} {4} {5}", listOfDieFaces[0], listOfDieFaces[1], listOfDieFaces[2], listOfDieFaces[3], listOfDieFaces[4], listOfDieFaces[5]);
-                Console.WriteLine(dieFaceColums);
 
-                /*foreach (string die in listOfDieFaces)
-                {
-                    Console.WriteLine(die);
-                }*/
-
-                // If UserHearts <= 10 turn heartUnderTen to True
-                /*if (tracker.UserHearts <= 7)
-                {
-                    heartUnderSeven = true;
-                }
-
-                // If dice roll lands heart add heart
-                if ((listOfDieFaces.Contains("heart")) && (tracker.UserHearts >= 12) && !heartUnderSeven)
-                {
-                    tracker.AddUserHearts(tracker.UserHearts);
-                }
-
-                // If dice roll equals claw remove heart
-                if (listOfDieFaces.Contains("claw"))
-                {
-                    tracker.RemoveUserHearts(tracker.UserHearts);
-                }
-
-                // If dice roll equals 3 add three stars
-                if (listOfDieFaces.Contains("3"))
-                {
-                    tracker.AddThreeUserStars(tracker.UserStars);
-                }
-
-                // If dice roll equals star add one star
-                if (listOfDieFaces.Contains("star"))
-                {
-                    tracker.AddOneUserStar(tracker.UserStars);
-                }*/
-
+                Console.WriteLine();
 
                 if ((tracker.UserHearts >= 12) && !heartUnderSeven)
                 {
@@ -130,6 +103,47 @@ namespace MonstersAttackTokyo
                 }
 
                 tracker.GameUpdater(listOfDieFaces);
+
+                foreach (string die in listOfDieFaces)
+                {
+                    switch (die)
+                    {
+                        case "claw":
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            break;
+                        case "heart":
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            break;
+                        case "arrow":
+                            Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                            break;
+                        case "star":
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            break;
+                        default:
+                            Console.ForegroundColor = ConsoleColor.White;
+                            break;
+                    }
+                    // If (claw, heart, arrow, or star) print correct response
+                    if (die == "claw")
+                    {
+                        Console.WriteLine($"{die} - You lost a heart! you are now at {tracker.UserHearts}");
+                    }
+                    else if (die == "heart" && tracker.UserHearts != 12)
+                    {
+                        Console.WriteLine($"{die} - You gained a heart! you are now at {tracker.UserHearts}");
+                    }
+                    else if (die == "arrow")
+                    {
+                        Console.WriteLine($"{die} - You injured {monster.MonsterName}! {monster.MonsterName} is at {tracker.MonsterHealth}");
+                    }
+                    else if (die =="star")
+                    {
+                        Console.WriteLine($"{die} - You gained a star! you are now at {tracker.UserStars}");
+                    }
+
+
+                }
 
                 if (tracker.UserHearts <= 0)
                 {
@@ -141,24 +155,40 @@ namespace MonstersAttackTokyo
                     starsEqualTwenty = true;
                 }
 
+                if (tracker.MonsterHealth <= 0)
+                {
+                    monsterHealthEqualZero = true;
+                }
+
                 if (tracker.UserHearts <= 7)
                 {
                     heartUnderSeven = true;
                 }
 
+                Console.ForegroundColor = ConsoleColor.White;
+
                 // Print to Console what the results of the dice roll were with Console.Color (red indicating bad result, green indicating good result of dice roll)
                 // Console.WriteLine($"{ bird, -30 } - { score, -10 } - {lives, -8}");
-                Console.WriteLine($"Stars = {tracker.UserStars} - Hearts = { tracker.UserHearts}\n");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine($"Stars - {tracker.UserStars}");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"Hearts - {tracker.UserHearts}");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Monsters Health - {tracker.MonsterHealth}");
             }
 
             if (tracker.UserHearts <= 0)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("You have died!");
+                Console.WriteLine($"{userInfo.UserName} have died!");
             } else if (tracker.UserStars >= 20)
             {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine($"{userInfo.UserName} got to 20 stars and beat the game!");
+            } else if (tracker.MonsterHealth <= 0)
+            {
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("You got  to 20 stars and beat the game!");
+                Console.WriteLine($"{userInfo.UserName} slayed {monster.MonsterName}");
             }
             Console.ReadLine();
         }

@@ -30,9 +30,9 @@ namespace MonstersAttackTokyo
                 { 1, "claw" },
                 { 2, "star" },
                 { 3, "arrow" },
-                { 4, "claw" },
+                { 4, "arrow" },
                 { 5, "star" },
-                { 6, "heart" }
+                { 6, "heart" },
             };
 
             return die;

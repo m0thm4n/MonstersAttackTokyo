@@ -8,8 +8,12 @@ namespace MonstersAttackTokyo
 {
     public class Tracker
     {
+        
+        
         public bool heartsUnderSeven = false;
 
+        //Keep track of Monster health
+        public int MonsterHealth { get; set; }
         // Keep track of hearts
         public int UserHearts { get; set; }
         // Keep track of stars
@@ -44,6 +48,11 @@ namespace MonstersAttackTokyo
             return UserStars++;
         }
 
+        public int RemoveMonsterHealth(int monsterHealth)
+        {
+            return MonsterHealth--;
+        }
+
         public void GameUpdater(List<string> listOfDieFaces)
         {
             foreach (string die in listOfDieFaces)
@@ -64,15 +73,16 @@ namespace MonstersAttackTokyo
                     case "star":
                         AddOneUserStar(UserStars);
                         break;
+                    case "arrow":
+                        RemoveUserStars(UserStars);
+                        RemoveMonsterHealth(MonsterHealth);
+                        break;
                 }
             }
         }
 
-        // Add monster 
-        // Arrow removes stars and damages monsters
         // Add three dragons
         // Golden dragon
-        // Kill other player you gain stars
 
         public Tracker()
         {
