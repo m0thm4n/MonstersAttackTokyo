@@ -148,9 +148,18 @@ namespace MonstersAttackTokyo
 
                 // Print to Console what the results of the dice roll were with Console.Color (red indicating bad result, green indicating good result of dice roll)
                 // Console.WriteLine($"{ bird, -30 } - { score, -10 } - {lives, -8}");
-                Console.WriteLine($"{tracker.UserStars} - { tracker.UserHearts}");
+                Console.WriteLine($"Stars = {tracker.UserStars} - Hearts = { tracker.UserHearts}\n");
             }
-            Console.WriteLine();
+
+            if (tracker.UserHearts <= 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("You have died!");
+            } else if (tracker.UserStars >= 20)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("You got  to 20 stars and beat the game!");
+            }
             Console.ReadLine();
         }
     }
