@@ -15,42 +15,55 @@ namespace MonstersAttackTokyo
         //Keep track of Monster health
         public int MonsterHealth { get; set; }
         // Keep track of hearts
+        public int DragonHealth { get; set;}
+
         public int UserHearts { get; set; }
         // Keep track of stars
         public int UserStars { get; set; }
+
+        public int WeaponDamage { get;  set; }
         
         // Add a Method to remove a heart
-        public int RemoveUserHearts(int userHearts)
+        public int RemoveUserHearts()
         {
             return UserHearts--;
         }
         
         // Add a Method to add a heart
-        public  int AddUserHearts(int userHearts)
+        public  int AddUserHearts()
         {
             return UserHearts++;
         }
         
         // Add a Method to remove a star
-        public int RemoveUserStars(int userStars)
+        public int RemoveUserStars()
         {
             return UserStars--;
         }
         
         // Add a Method to add a star
-        public int AddThreeUserStars(int userStars)
+        public int AddThreeUserStars()
         {
             return UserStars + 3;
         }
 
-        public int AddOneUserStar(int userStars)
+        public int AddOneUserStar()
         {
             return UserStars++;
         }
 
-        public int RemoveMonsterHealth(int monsterHealth)
+        public int RemoveMonsterHealth()
         {
             return MonsterHealth--;
+        }
+        public int RemoveDragonHealth()
+        {
+            return DragonHealth--;
+        }
+        // Remove Dragon health based on weapon
+        public int RemoveDragonHealthWithItem()
+        {
+            return DragonHealth -= WeaponDamage;
         }
 
         public void GameUpdater(List<string> listOfDieFaces)
@@ -61,28 +74,30 @@ namespace MonstersAttackTokyo
                 {
                     case "claw":
                         // If dice roll equals claw remove heart
-                        RemoveUserHearts(UserHearts);
-                        break;
-
-                    // If dice roll equals 3 add three stars
-                    case "3":
-                        AddThreeUserStars(UserStars);
+                        RemoveUserHearts();
                         break;
 
                     // If dice roll equals star add one star
                     case "star":
-                        AddOneUserStar(UserStars);
+                        AddOneUserStar();
                         break;
-                    case "arrow":
-                        RemoveUserStars(UserStars);
-                        RemoveMonsterHealth(MonsterHealth);
-                        break;
+                    /*case "arrow":
+                        RemoveMonsterHealth();
+                        break;*/
+                }
+
+                if (die == "item" && MonsterHealth <= 0)
+                {
+                    RemoveDragonHealth();
+                }
+                else if (die == "arrow") 
+                {
+                    RemoveMonsterHealth();
                 }
             }
         }
 
-        // Add three dragons
-        // Golden dragon
+        // Beat the Golden dragon and then you try and slay the monster
 
         public Tracker()
         {

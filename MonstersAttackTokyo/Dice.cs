@@ -30,8 +30,8 @@ namespace MonstersAttackTokyo
                 { 1, "claw" },
                 { 2, "star" },
                 { 3, "arrow" },
-                { 4, "arrow" },
-                { 5, "star" },
+                { 4, "item" },
+                { 5, "item" },
                 { 6, "heart" },
             };
 
@@ -92,16 +92,6 @@ namespace MonstersAttackTokyo
                     break;
             }
             return rolledDice;
-        }
-
-        public bool CheckForDuplicates(List<string> dieFaces)
-        {
-            var duplicates = dieFaces
-                .GroupBy(p => p)
-                .Where(g => g.Count() >= 3)
-                .Select(g => g.Key);
-
-            return duplicates.Count() > 0;
         }
 
         public Dice()

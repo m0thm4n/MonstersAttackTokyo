@@ -12,7 +12,6 @@ namespace MonstersAttackTokyo
 
         public string Monster { get; set; }
 
-
         // Add Vigenere Cipher
     }
 }

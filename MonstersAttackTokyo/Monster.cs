@@ -55,6 +55,9 @@ namespace MonstersAttackTokyo
             }
             return tracker.MonsterHealth;
         }
+
+        // Get item from killing the monster to help with the dragon
+        // Shield, sword, mace
         
         public Monster() { }
     }
