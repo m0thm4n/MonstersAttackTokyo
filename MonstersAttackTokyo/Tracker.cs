@@ -7,9 +7,7 @@ using System.Threading.Tasks;
 namespace MonstersAttackTokyo
 {
     public class Tracker
-    {
-        
-        
+    { 
         public bool heartsUnderSeven = false;
 
         //Keep track of Monster health
@@ -81,9 +79,9 @@ namespace MonstersAttackTokyo
                     case "star":
                         AddOneUserStar();
                         break;
-                    /*case "arrow":
-                        RemoveMonsterHealth();
-                        break;*/
+                        /*case "arrow":
+                            RemoveMonsterHealth();
+                            break;*/
                 }
 
                 if (die == "item" && MonsterHealth <= 0)

@@ -9,9 +9,10 @@ namespace MonstersAttackTokyo
     class Item
     {
         readonly Random _random = new Random();
-        Tracker tracker = new Tracker();
+        readonly Tracker tracker = new Tracker();
         public string Weapon { get; set; }
 
+        public string WeaponName { get; set; }
         public List<string> AssignWeapon(List<string> weapons)
         {
             weapons.Add("ShieldBash");
@@ -29,6 +30,7 @@ namespace MonstersAttackTokyo
             int index = _random.Next(weapons.Count);
             string value = weapons[index];
             weapons.RemoveAt(index);
+            WeaponName = value;
             return value;
         }
 
